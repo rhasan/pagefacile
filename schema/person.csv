@@ -1,0 +1,1 @@
+attribute_name,mysql_data_type,not_NULL,unique_index,unsigned,auto_incrementname,VARCHAR(255),yes,yes,,noage,INT,,,,city,VARCHAR(255),,,,
