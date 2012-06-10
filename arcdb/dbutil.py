@@ -17,8 +17,8 @@ import config as conf
 
 
 def hello():
-	print "hello:", host
-	print "hello user", user
+	print 'hello:', host
+	print 'hello user', user
 
 def connect():
 	try:

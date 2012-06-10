@@ -63,7 +63,7 @@ class ArcDB:
 				for tpe in self.property_in_entity_list:
 					if etype.get('id') == tpe.get('entity_type_id'):
 						prop_id_list.append(tpe.get('property_id'))
-						cur.execute("select * from property where id=%s", tpe.get('property_id'))
+						cur.execute('select * from property where id=%s', tpe.get('property_id'))
 						prop = cur.fetchone()
 						prop_list.append(prop)
 				
@@ -72,7 +72,7 @@ class ArcDB:
 
 
 			#print self.property_in_entity_key_eid
-			print self.etype_props_dict
+			#print self.etype_props_dict
 				
 		except:
 			raise
@@ -81,7 +81,7 @@ class ArcDB:
 				con.close()
 
 	def __init__(self):
-		print "in init"
+		print 'in init'
 		try:
 			self.load_entity_types()
 			self.load_property_in_entity()
@@ -96,35 +96,28 @@ class ArcDB:
 
 			#get the entity type
 			entity_type = self.entity_types_dict_key_url.get(entity_type_url)
-			print entity_type
+			#print entity_type
 
 			#get entity data
-			cur.execute("select * from entity_data where entity_type_id=%s", entity_type["id"])
+			cur.execute('select * from entity_data where entity_type_id=%s', entity_type['id'])
 			entity_data = cur.fetchall()
 
 			entities = list()
-			print '############################################'
+			#print '############################################'
 			for entity_instance in entity_data:
 				entity = dict(entity_instance)
 				entity['entity_type_url'] = entity_type.get('url')
 				#print entity
 				for entity_prop in self.etype_props_dict.get(entity_type.get('id')):
-					prop_data_table_name = "prop_"+entity_prop["label"]+"_data"
+					prop_data_table_name = 'prop_'+entity_prop['label']+'_data'
 					#print prop_data_table_name
-					prop_data_query = "select * from %s where entity_data_id=%s" % (prop_data_table_name, entity_instance["id"])
+					prop_data_query = 'select * from %s where entity_data_id=%s' % (prop_data_table_name, entity_instance.get('id'))
 					#print prop_data_query
 					cur.execute(prop_data_query)
 					entity_prop_value = cur.fetchone()
-					entity[entity_prop["label"]] = entity_prop_value['value']
+					entity[entity_prop['label']] = entity_prop_value.get('value')
 				entities.append(entity)
 
-
-			for te in entities:
-				for k, v in te.items():
-					print k, ':', v
-				print '############################################'
-
-			
 		except mdb.Error, e:
 
 			raise
@@ -133,4 +126,5 @@ class ArcDB:
 
 			if con:
 				con.close()
+			return entities
 

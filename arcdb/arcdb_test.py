@@ -15,4 +15,11 @@ import db
 
 archdb = db.ArcDB()
 
-archdb.get_entities_by_type('http://schema.org/Person')
+entities = archdb.get_entities_by_type('http://schema.org/Person')
+
+
+
+for te in entities:
+	for k, v in te.items():
+		print k, ':', v
+	print '############################################'
